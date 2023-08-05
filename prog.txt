@@ -1,0 +1,44 @@
+#include <stdio.h>
+
+int binary_search(int arr[], int low, int high, int x, int* depth)
+{
+    if (low > high)
+        return -1;
+
+    int mid = (low + high) / 2;
+    (*depth)++;
+    
+    if (arr[mid] == x)
+        return mid;
+    else if (arr[mid] < x)
+        return binary_search(arr, mid + 1, high, x, depth);
+    else
+        return binary_search(arr, low, mid - 1, x, depth);
+}
+
+int main()
+{
+    int n, x;
+    printf("Enter the size of the array: ");
+    scanf("%d", &n);
+
+    int arr[n];
+    printf("Enter the elements of the array in non-decreasing order:\n");
+    for (int i = 0; i < n; i++)
+        scanf("%d", &arr[i]);
+
+    printf("Enter the element to search for: ");
+    scanf("%d", &x);
+
+    int depth = 0;
+    int pos = binary_search(arr, 0, n - 1, x, &depth);
+
+    if (pos == -1)
+        printf("Element not found\n");
+    else
+        printf("Element found at position %d\n", pos);
+
+    printf("Depth of recursion: %d\n", depth);
+
+    return 0;
+}
